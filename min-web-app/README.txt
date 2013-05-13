@@ -1,0 +1,1 @@
+Inspired by simple-java demo app presented by Anton Keks: https://github.com/angryziber/simple-java

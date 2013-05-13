@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Sample spring-driven test.
  */
-public class AppTest {
+public class DummyTest {
 
     /**
      * Sample test method.
