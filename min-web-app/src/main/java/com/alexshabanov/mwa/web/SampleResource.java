@@ -1,5 +1,7 @@
 package com.alexshabanov.mwa.web;
 
+import com.google.inject.Inject;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -12,6 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Path("/")
 public final class SampleResource {
+    @Inject
+    private SampleService sampleService;
 
     @GET
     @Produces("text/plain")
@@ -25,6 +29,13 @@ public final class SampleResource {
     @Path("/message/{param}")
     public SampleMessage getMessage(@PathParam("param") String param) {
         return SampleMessage.from("message=" + param);
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("/letter/{param}")
+    public SampleMessage getLetterText(@PathParam("param") int param) {
+        return SampleMessage.from(sampleService.getGreeting(param));
     }
 
     @XmlRootElement

@@ -2,6 +2,7 @@ package com.alexshabanov.mwa.web;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.TypeLiteral;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
@@ -23,8 +24,11 @@ public final class GuiceServletConfig extends GuiceServletContextListener {
                 bind(SampleResource.class);
 
                 /* reader/writer */
-                bind(MessageBodyReader.class).to(JacksonJsonProvider.class);
-                bind(MessageBodyWriter.class).to(JacksonJsonProvider.class);
+                bind(new TypeLiteral<MessageBodyReader<Object>>() {}).to(new TypeLiteral<JacksonJsonProvider>() {});
+                bind(new TypeLiteral<MessageBodyWriter<Object>>() {}).to(new TypeLiteral<JacksonJsonProvider>() {});
+
+                /* services */
+                bind(SampleService.class).to(DefaultSampleService.class);
 
                 serve("/rest/*").with(GuiceContainer.class);
             }
